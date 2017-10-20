@@ -1,0 +1,57 @@
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 offset-md-4">           
+              <div class="form-group">
+                <label for="complaint">Ingrese Reclamo para la Empresa <%= @enterprise.name %></label>
+                <textarea name="complaint" class="form-control" id="complaint" rows="3" ></textarea>
+              </div>
+              <a href="javascript:void(0)" class="btn btn-primary" id="btn">Enviar </a>
+            
+        </div>
+    </div>
+</div>
+    
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 offset-md-3">
+            <input type="text" id="valor">
+            <input type="button" id="search" value="Buscar">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5 offset-md-3" id="rowtabla"> 
+                    <%= render "reclamos", reclamos: @reclamos %> 
+            
+        </div>
+    </div>
+ </div>
+
+<script>
+    $(document).on('turbolinks:load',function(){
+       console.log("turbo  ready");
+       $('#btn').on('click', function(event) {
+           event.preventDefault();
+           var reclamo = $("#complaint").val();
+           var token = '<%= form_authenticity_token %>'
+           Rails.ajax({
+                url: '<%= complaint_path(@enterprise) %>',
+                type: 'POST',
+                data: "complaint="+reclamo
+           })
+          
+       })
+       $('#search').on('click', function(event) {
+              event.preventDefault();
+              Rails.ajax({
+                  url: '<%= detail_path(@enterprise) %>',
+                  type: 'get',
+                  dataType: 'script',
+                  data: "search="+$('#valor').val()
+              })
+              
+          });  
+    })
+</script>

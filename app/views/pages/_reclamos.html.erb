@@ -1,0 +1,17 @@
+<table class="table table-striped table-hover table-responsive table-bordered table-inverse" >
+                <tr>
+                     <th>Reclamo</th>
+                     <th>Fecha</th>
+                     <th>usuario</th>
+                </tr>
+<% reclamos.order("created_at desc").each do |e| %>
+    <tr>
+        
+          <th scope="row"><%= e.content %></th>
+            <td><%= e.created_at %></td>
+            <td><%= e.user.email %></td>
+    </tr>
+            
+
+<% end %> 
+            </table>
